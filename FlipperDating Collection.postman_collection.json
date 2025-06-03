@@ -1,0 +1,110 @@
+{
+	"info": {
+		"_postman_id": "ce0bf858-9e57-4b02-baaa-61a2d3097523",
+		"name": "FlipperDating Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18731314"
+	},
+	"item": [
+		{
+			"name": "localhost:8080/userapi/user/683d17ea0379943d1e598cf5",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/userapi/user/683d17ea0379943d1e598cf5",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"userapi",
+						"user",
+						"683d17ea0379943d1e598cf5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/userapi/user/zodiac/leo",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/userapi/user/zodiac/leo",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"userapi",
+						"user",
+						"zodiac",
+						"leo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/userapi/user/name/lovely1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/userapi/user/name/lovely1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"userapi",
+						"user",
+						"name",
+						"lovely1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/userapi/users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/userapi/users",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"userapi",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/userapi/test",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/userapi/test",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"userapi",
+						"test"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
