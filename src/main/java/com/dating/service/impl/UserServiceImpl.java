@@ -3,7 +3,6 @@ package com.dating.service.impl;
 import com.dating.service.UserService;
 import com.dating.model.User;
 import com.dating.repository.UserMongoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

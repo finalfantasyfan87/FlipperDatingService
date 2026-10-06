@@ -14,8 +14,8 @@ a 401 unauthorized when testing your controller mappings*/
 @EnableWebSecurity
 public class SecurityConfig {
     @Bean
-    public SecurityFilterChain filterChain (HttpSecurity httpSecurity)
-        throws Exception {
+    SecurityFilterChain filterChain(HttpSecurity httpSecurity)
+            throws Exception {
         httpSecurity.cors(corsCustomizer -> corsCustomizer.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable()).authorizeHttpRequests(auth ->
                 auth.requestMatchers("/userapi/**").permitAll()
@@ -25,7 +25,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfigurationSource corsConfigurationSource() {
         return request -> {
             var cors = new org.springframework.web.cors.CorsConfiguration();
             cors.setAllowedOrigins(java.util.List.of("http://localhost:3000"));
