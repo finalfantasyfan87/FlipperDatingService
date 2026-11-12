@@ -1,13 +1,21 @@
 package com.dating.service;
 
-import org.springframework.stereotype.Service;
-
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
+
+import org.springframework.stereotype.Service;
 
 @Service
 public class ZodiacCompatibilityService {
-    private static final Map<String,Integer> ZODIAC_COMPATABILITY_MAP = new HashMap<>();
+
+    private static final Set<String> VALID_SIGNS = Set.of(
+            "aries", "taurus", "gemini", "cancer", "leo", "virgo",
+            "libra", "scorpio", "sagittarius", "capricorn", "aquarius", "pisces");
+
+    private static final Map<String, Integer> ZODIAC_COMPATABILITY_MAP = new HashMap<>();
+
     static {
         initializeCompatibilityScores();
     }
@@ -32,17 +40,40 @@ public class ZodiacCompatibilityService {
         addCompatibility("taurus", "virgo", 90);
         addCompatibility("taurus", "capricorn", 90);
         addCompatibility("virgo", "capricorn", 90);
-
-
     }
 
-    private static String getCompatibilityKey(String sign1, String sign2){
-        return (sign1.compareTo(sign2) <= 0) ? (sign1 + "_" + sign2) : (sign2 + "_" + sign1);
+    /**
+     * Returns the compatibility score for two zodiac signs. The result does not depend on
+     * argument order. Signs are matched case-insensitively with surrounding spaces ignored.
+     *
+     * @throws IllegalArgumentException if either sign is null, blank, or not a zodiac sign
+     */
+    public int getCompatibilityScore(String sign1, String sign2) {
+        String first = normalize(sign1);
+        String second = normalize(sign2);
+        if (first.equals(second)) {
+            return 60;
+        }
+        return ZODIAC_COMPATABILITY_MAP.getOrDefault(getCompatibilityKey(first, second), 50);
+    }
 
+    private static String normalize(String sign) {
+        if (sign == null || sign.isBlank()) {
+            throw new IllegalArgumentException("Zodiac sign is required");
+        }
+        String normalized = sign.trim().toLowerCase(Locale.ROOT);
+        if (!VALID_SIGNS.contains(normalized)) {
+            throw new IllegalArgumentException("Unknown zodiac sign: " + sign);
+        }
+        return normalized;
+    }
+
+    private static String getCompatibilityKey(String sign1, String sign2) {
+        return (sign1.compareTo(sign2) <= 0) ? (sign1 + "_" + sign2) : (sign2 + "_" + sign1);
     }
 
     private static void addCompatibility(String sign1, String sign2, int score) {
         String compatibilityKey = getCompatibilityKey(sign1, sign2);
-        ZODIAC_COMPATABILITY_MAP.put(compatibilityKey,score);
+        ZODIAC_COMPATABILITY_MAP.put(compatibilityKey, score);
     }
 }

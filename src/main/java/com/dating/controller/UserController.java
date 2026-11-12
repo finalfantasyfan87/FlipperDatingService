@@ -2,9 +2,8 @@ package com.dating.controller;
 
 import com.dating.model.User;
 import com.dating.service.UserService;
-import org.springframework.http.HttpEntity;
+import com.dating.utility.ValidationUtil;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -22,8 +21,9 @@ public class UserController {
     /*TODO: global exception handler and validationutil class, also data sanization class, move cross orgin to security class*/
 
     @GetMapping("/users")
-        public ResponseEntity<List<User>> getUsers() {
-        return !userService.getAllUsers().stream().toList().isEmpty() ? ResponseEntity.ok(userService.getAllUsers()) : ResponseEntity.notFound().build();
+    public ResponseEntity<List<User>> getUsers() {
+        List<User> users = userService.getAllUsers();
+        return users.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(users);
     }
 
     @GetMapping("/user/{id}")
@@ -33,20 +33,26 @@ public class UserController {
 
     @GetMapping("/user/name/{userName}")
     public ResponseEntity<User> getUserByUserName(@PathVariable String userName){
-        return userService.findUserByUserName(userName) != null ? ResponseEntity.ok(userService.findUserByUserName(userName)) : ResponseEntity.notFound().build();
+        User user = userService.findUserByUserName(userName);
+        return user != null ? ResponseEntity.ok(user) : ResponseEntity.notFound().build();
     }
 
     @GetMapping("/user/zodiac/{zodiacSign}")
     public ResponseEntity<List<User>> getUsersByZodiacSign(@PathVariable String zodiacSign){
-return (long) userService.getUsersByZodiacSign(zodiacSign).size() > 0 ? ResponseEntity.ok(userService.getUsersByZodiacSign(zodiacSign)) : ResponseEntity.notFound().build();
-}
+        List<User> users = userService.getUsersByZodiacSign(zodiacSign);
+        return users.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(users);
+    }
 
-@PostMapping("/addUser")
-public ResponseEntity<?> addUser(@RequestBody User user) {
-    User userToSave = userService.saveUser(user);
-    return ResponseEntity.created(URI.create("/addUser/" + userToSave.getId()))
-            .body(userToSave);
-}
+    @PostMapping("/addUser")
+    public ResponseEntity<?> addUser(@RequestBody User user) {
+        if (!ValidationUtil.isEmailValid(user.getEmail())) {
+            return ResponseEntity.badRequest().build();
+        }
+        User userToSave = userService.saveUser(user);
+        return ResponseEntity.created(URI.create("/addUser/" + userToSave.getId()))
+                .body(userToSave);
+    }
+
     @GetMapping("/test")
     public ResponseEntity<String> test() {
         return ResponseEntity.ok("API is working!");
