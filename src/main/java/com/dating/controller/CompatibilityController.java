@@ -24,11 +24,7 @@ public class CompatibilityController {
     @GetMapping("/compatibility")
     public ResponseEntity<Map<String, Integer>> getCompatibility(@RequestParam String first,
                                                                  @RequestParam String second) {
-        try {
-            int score = zodiacCompatibilityService.getCompatibilityScore(first, second);
-            return ResponseEntity.ok(Map.of("score", score));
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
-        }
+        int score = zodiacCompatibilityService.getCompatibilityScore(first, second);
+        return ResponseEntity.ok(Map.of("score", score));
     }
 }
