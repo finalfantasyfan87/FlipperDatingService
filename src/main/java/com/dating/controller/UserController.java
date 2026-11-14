@@ -59,7 +59,7 @@ public class UserController {
     @PostMapping("/addUser")
     public ResponseEntity<User> addUser(@RequestBody User user) {
         if (!ValidationUtil.isEmailValid(user.getEmail())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "A valid email address is required");
+            throw new IllegalArgumentException("A valid email address is required");
         }
         User userToSave = userService.saveUser(user);
         return ResponseEntity.created(URI.create("/addUser/" + userToSave.getId()))

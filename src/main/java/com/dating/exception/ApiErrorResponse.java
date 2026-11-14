@@ -1,8 +1,5 @@
 package com.dating.exception;
 
-/**
- * Consistent response body returned for API errors.
- */
 public final class ApiErrorResponse {
 
     private final String code;
